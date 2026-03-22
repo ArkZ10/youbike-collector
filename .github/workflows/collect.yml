@@ -2,8 +2,8 @@ name: YouBike Data Collector
 
 on:
   schedule:
-    # Runs every 10 minutes
-    - cron: '*/10 * * * *'
+    # Every 10 minutes, from Mar 22 to Mar 27 only
+    - cron: '*/10 * 22,23,24,25,26,27 3 *'
   workflow_dispatch:  # allows manual trigger from GitHub UI
 
 jobs:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Check out the repo (so we can read/write the CSV)
+      # 1. Check out the repo
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: pip install requests pandas
 
-      # 4. Run ONE poll (single fetch, not the loop)
+      # 4. Run one poll
       - name: Run one poll
         run: python collect_one_poll.py
 
@@ -34,6 +34,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
           git add data/youbike_dataset.csv
           git diff --staged --quiet || git commit -m "data: add poll $(date +'%Y-%m-%d %H:%M UTC')"
           git push
