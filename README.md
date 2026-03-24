@@ -1,6 +1,6 @@
 # YouBike Dataset Collector 
 
-Automatically collects real-time YouBike station availability data every 10 minutes using GitHub Actions.
+Automatically collects real-time YouBike station availability data every 10 minutes using GitHub Actions
 
 ## Dataset
 
