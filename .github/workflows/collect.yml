@@ -1,43 +1,43 @@
-name: YouBike Data Collector
+# name: YouBike Data Collector
 
-on:
-  schedule:
-    # Every 10 minutes, from Mar 22 to Mar 27 only
-    - cron: '*/10 * * * *'
-  workflow_dispatch:  # allows manual trigger from GitHub UI
+# on:
+#   schedule:
+#     # Every 10 minutes, from Mar 22 to Mar 27 only
+#     - cron: '*/10 * * * *'
+#   workflow_dispatch:  # allows manual trigger from GitHub UI
 
-jobs:
-  collect:
-    runs-on: ubuntu-latest
+# jobs:
+#   collect:
+#     runs-on: ubuntu-latest
 
-    steps:
-      # 1. Check out the repo
-      - name: Checkout repository
-        uses: actions/checkout@v4
+#     steps:
+#       # 1. Check out the repo
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
 
-      # 2. Set up Python
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+#       # 2. Set up Python
+#       - name: Set up Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: '3.11'
 
-      # 3. Install dependencies
-      - name: Install dependencies
-        run: pip install requests pandas
+#       # 3. Install dependencies
+#       - name: Install dependencies
+#         run: pip install requests pandas
 
-      # 4. Run one poll
-      - name: Run one poll
-        run: python collect_one_poll.py
+#       # 4. Run one poll
+#       - name: Run one poll
+#         run: python collect_one_poll.py
 
-      # 5. Commit the updated CSV back to the repo
-      - name: Commit updated dataset
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f data/
-          git stash
-          git pull --rebase origin main
-          git stash pop
-          git add -f data/
-          git diff --staged --quiet || git commit -m "data: add poll $(date +'%Y-%m-%d %H:%M UTC')"
-          git push
+#       # 5. Commit the updated CSV back to the repo
+#       - name: Commit updated dataset
+#         run: |
+#           git config user.name "github-actions[bot]"
+#           git config user.email "github-actions[bot]@users.noreply.github.com"
+#           git add -f data/
+#           git stash
+#           git pull --rebase origin main
+#           git stash pop
+#           git add -f data/
+#           git diff --staged --quiet || git commit -m "data: add poll $(date +'%Y-%m-%d %H:%M UTC')"
+#           git push
