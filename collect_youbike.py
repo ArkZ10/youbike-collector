@@ -1,14 +1,3 @@
-"""
-collect_youbike.py
-==================
-Run this locally if you want to collect data from your own laptop.
-Polls the YouBike API every 10 minutes and auto-stops after 5 days.
-
-Usage:
-    python collect_youbike.py
-
-Author: Yeftha
-"""
 
 import requests
 import csv
@@ -70,7 +59,7 @@ def fetch_youbike():
         r = requests.get(YOUBIKE_URL, timeout=10)
         r.raise_for_status()
         data = r.json()
-        log.info(f"📡 Fetched {len(data)} stations")
+        log.info(f"Fetched {len(data)} stations")
         return data
     except requests.RequestException as e:
         log.error(f"Fetch failed: {e}")
@@ -125,7 +114,7 @@ def process_and_save(stations, now):
     with open(OUTPUT_FILE, "a", newline="", encoding="utf-8") as f:
         csv.DictWriter(f, fieldnames=FIELDNAMES).writerows(rows)
 
-    log.info(f"💾 Saved {len(rows)} rows | Skipped {skipped} inactive")
+    log.info(f"Saved {len(rows)} rows | Skipped {skipped} inactive")
     return len(rows)
 
 # ─────────────────────────────────────────────
@@ -156,7 +145,7 @@ def main():
         if stations:
             process_and_save(stations, now)
         else:
-            log.warning("⚠️  No data — skipping this poll")
+            log.warning("No data — skipping this poll")
 
         if datetime.now() + timedelta(seconds=POLL_INTERVAL) < end_time:
             log.info(f"💤 Sleeping 10 minutes...")
@@ -165,7 +154,7 @@ def main():
             break
 
     log.info("=" * 50)
-    log.info(f"✅ Done! {poll_count} polls over {COLLECTION_DAYS} days")
+    log.info(f"Done! {poll_count} polls over {COLLECTION_DAYS} days")
     log.info(f"   Saved to: {OUTPUT_FILE}")
     log.info("=" * 50)
 
@@ -173,4 +162,4 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        log.info("🛑 Stopped manually. Data saved.")
+        log.info("Stopped manually. Data saved.")

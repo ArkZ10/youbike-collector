@@ -1,12 +1,3 @@
-"""
-collect_one_poll.py
-===================
-Called by GitHub Actions every 10 minutes.
-Fetches ONE snapshot of YouBike data and appends it to the CSV.
-
-Author: Yeftha
-"""
-
 import requests
 import csv
 import os
@@ -120,6 +111,6 @@ if __name__ == "__main__":
 
     if stations:
         count = process_and_save(stations, now)
-        print(f"✅ Done! {count} records saved to {OUTPUT_FILE}")
+        print(f"Done! {count} records saved to {OUTPUT_FILE}")
     else:
-        print("⚠️  No data fetched — nothing saved this poll")
+        print("No data fetched — nothing saved this poll")

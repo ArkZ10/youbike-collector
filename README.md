@@ -169,24 +169,3 @@ No stations dropped in or out during the 8-day window.
   verified by computing per-station timestamp differences in the analysis notebook.
 
 ---
-
-## Usage
-
-### Run a single poll manually
-
-```bash
-python collect_one_poll.py
-```
-
-### Run locally (continuous collection)
-
-```bash
-pip install -r requirements.txt
-python collect_youbike.py
-```
-
-### Stop GitHub Actions collection
-
-Go to: **Actions tab → select workflow → Disable workflow**
-
----
